@@ -5,10 +5,10 @@ using UnityEngine;
 public class DoorAction : MonoBehaviour
 {
     [SerializeField] private DoorOpened _doorOpened;
-    [SerializeField] private AlarmSystem _alarmSystem;
     [SerializeField] private AudioClip _doorSound;
     
     private AudioSource _audioSource;
+    private AlarmSystem _alarmSystem;
 
     private bool canClose = false;
 
@@ -35,7 +35,7 @@ public class DoorAction : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out Player player))
+        if (collision.TryGetComponent<Player>(out Player player) && _doorOpened.gameObject.activeSelf == false)
         {
             _doorOpened.gameObject.SetActive(true);
             _audioSource.PlayOneShot(_doorSound);
