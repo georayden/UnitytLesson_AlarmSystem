@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
+
 public class DoorAction : MonoBehaviour
 {
     [SerializeField] private DoorOpened _doorOpened;
@@ -23,7 +25,7 @@ public class DoorAction : MonoBehaviour
     {
         if (canClose)
         {  
-            if(_alarmSystem.CurrentVolume() == 0)
+            if(_alarmSystem.CurrentVolume == 0)
             {
                 _doorOpened.gameObject.SetActive(false);
                 _audioSource.PlayOneShot(_doorSound);
@@ -35,17 +37,27 @@ public class DoorAction : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out Player player) && _doorOpened.gameObject.activeSelf == false)
+        if (collision.TryGetComponent<Player>(out Player player))
         {
-            _doorOpened.gameObject.SetActive(true);
-            _audioSource.PlayOneShot(_doorSound);
+            canClose = false;
+
+            if (_doorOpened.gameObject.activeSelf == false)
+            {
+                _doorOpened.gameObject.SetActive(true);
+                _audioSource.PlayOneShot(_doorSound);
+            }            
+            
+            _alarmSystem.IncreaseVolume();
         }        
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Player>(out Player player))
         {
             canClose = true;
+
+            _alarmSystem.DecreaseVolume();            
         }
     }
 }

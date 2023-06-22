@@ -2173,7 +2173,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorOpened: {fileID: 2024970040}
-  _alarmSystem: {fileID: 0}
   _doorSound: {fileID: 8300000, guid: a68d77d1ab4d8ad48bfc7ea06d637e0a, type: 3}
 --- !u!61 &1842680399
 BoxCollider2D:
@@ -2673,4 +2672,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb2b75fc806b16449cbc167ad1517e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _volumeChangingSpeed: 0.6
+  _volumeChangingSpeed: 0.4

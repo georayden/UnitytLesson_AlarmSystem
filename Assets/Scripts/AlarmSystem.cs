@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
+
 public class AlarmSystem : MonoBehaviour
 {
     [SerializeField] private float _volumeChangingSpeed;
 
     private AudioSource _audioSource;
 
-    private float targetValue = 0;
+    private float maximumVolme = 1;
+    private float _targetValue = 0;
+
+    public float CurrentVolume => _audioSource.volume;
 
     private void Awake()
     {
@@ -28,27 +33,19 @@ public class AlarmSystem : MonoBehaviour
 
     private void Update()
     { 
-        if (_audioSource.volume != targetValue)
+        if (_audioSource.volume != _targetValue)
         { 
             float currentVolume = _audioSource.volume;
-            _audioSource.volume = Mathf.MoveTowards(currentVolume, targetValue, _volumeChangingSpeed * Time.deltaTime);
+            _audioSource.volume = Mathf.MoveTowards(currentVolume, _targetValue, _volumeChangingSpeed * Time.deltaTime);
         } 
-    }
+    }   
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void IncreaseVolume()
     {
-        if (collision.TryGetComponent<Player>(out Player player))
-        {
-            targetValue = 1;
-        }
+        _targetValue = maximumVolme;
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    public void DecreaseVolume()
     {
-        if (collision.TryGetComponent<Player>(out Player player))
-        {
-            targetValue = 0;
-        }
+        _targetValue = 0;
     }
-
-    public float CurrentVolume() => _audioSource.volume;
 }
