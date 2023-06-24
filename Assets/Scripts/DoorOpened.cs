@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AlarmSystem))]
+[RequireComponent(typeof(TargetVolumeChanger))]
 
 public class DoorOpened : MonoBehaviour
 {      

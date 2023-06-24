@@ -10,27 +10,27 @@ public class DoorAction : MonoBehaviour
     [SerializeField] private AudioClip _doorSound;
     
     private AudioSource _audioSource;
-    private AlarmSystem _alarmSystem;
+    private TargetVolumeChanger _alarmSystem;
 
-    private bool canClose = false;
+    private bool _canClose = false;
 
     private void Start()
     {
-        _alarmSystem = _doorOpened.GetComponent<AlarmSystem>();
+        _alarmSystem = _doorOpened.GetComponent<TargetVolumeChanger>();
         _doorOpened.gameObject.SetActive(false);
         _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
-        if (canClose)
+        if (_canClose)
         {  
             if(_alarmSystem.CurrentVolume == 0)
             {
                 _doorOpened.gameObject.SetActive(false);
                 _audioSource.PlayOneShot(_doorSound);
 
-                canClose = false;
+                _canClose = false;
             }
         }
     }
@@ -39,7 +39,7 @@ public class DoorAction : MonoBehaviour
     {
         if (collision.TryGetComponent<Player>(out Player player))
         {
-            canClose = false;
+            _canClose = false;
 
             if (_doorOpened.gameObject.activeSelf == false)
             {
@@ -55,7 +55,7 @@ public class DoorAction : MonoBehaviour
     {
         if (collision.TryGetComponent<Player>(out Player player))
         {
-            canClose = true;
+            _canClose = true;
 
             _alarmSystem.DecreaseVolume();            
         }
