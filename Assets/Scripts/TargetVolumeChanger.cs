@@ -2,15 +2,14 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-
 public class TargetVolumeChanger : MonoBehaviour
 {
     [SerializeField] private float _volumeChangingSpeed;
 
-    private AudioSource _audioSource;
-
     private float _startVolume = 0.01f;
     private float _maximumVolume = 1;
+
+    private AudioSource _audioSource;
 
     private Coroutine _changeVolumeCoroutine;
 
@@ -34,25 +33,25 @@ public class TargetVolumeChanger : MonoBehaviour
 
     public void IncreaseVolume()
     {
-        ChangeVolume(_maximumVolume);
+        StartChangeVolume(_maximumVolume);
     }
 
     public void DecreaseVolume()
     {
-        ChangeVolume(0);
+        StartChangeVolume(0);
     }
 
-    private  void ChangeVolume(float targetVolume)
+    private void StartChangeVolume(float targetVolume)
     {
         if (_changeVolumeCoroutine != null)
         {
             StopCoroutine(_changeVolumeCoroutine);
         }
 
-        _changeVolumeCoroutine  = StartCoroutine(ChangeVolumeCoroutine(targetVolume));
+        _changeVolumeCoroutine  = StartCoroutine(ChangeVolume(targetVolume));
     }
     
-    private IEnumerator ChangeVolumeCoroutine(float targetVolume)
+    private IEnumerator ChangeVolume(float targetVolume)
     {
         var waitForFixedUpdate = new WaitForFixedUpdate();
 
