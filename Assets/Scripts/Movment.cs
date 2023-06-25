@@ -12,13 +12,13 @@ public class Movment : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
 
-    void Start()
+    private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
     }
     
-    void Update()
+    private void Update()
     {
         if (Input.GetKey(KeyCode.D))
         {
